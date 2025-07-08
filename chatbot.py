@@ -53,70 +53,114 @@ def load_history(today_only=False):
 init_db()
 migrate_db()
 
-# --- 커스텀 CSS ---
+# --- 커스텀 CSS (배경사진, 카드, 버튼, 입력창, 애니메이션 등) ---
 st.markdown('''
     <style>
-    html, body, [class*="css"]  { font-family: 'Pretendard', 'Noto Sans KR', sans-serif; background: #f8fafc; }
-    .main { background: #f8fafc; }
+    html, body, [class*="css"]  {
+        font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+        background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1500&q=80') no-repeat center center fixed;
+        background-size: cover;
+        min-height: 100vh;
+    }
+    .main {
+        background: rgba(255,255,255,0.85) !important;
+        border-radius: 24px;
+        box-shadow: 0 8px 32px #0002;
+        padding: 2em 1.5em 2em 1.5em;
+        margin: 2em auto 2em auto;
+        max-width: 800px;
+    }
     .stButton > button {
         background: linear-gradient(90deg, #ffb347 0%, #ffcc33 100%);
         color: #222;
         font-weight: bold;
-        border-radius: 8px;
-        padding: 0.6em 2em;
-        font-size: 1.1em;
-        box-shadow: 0 2px 8px #0001;
+        border-radius: 12px;
+        padding: 0.7em 2.5em;
+        font-size: 1.15em;
+        box-shadow: 0 4px 16px #ffb34744, 0 1.5px 0 #fff8 inset;
         border: none;
         transition: 0.2s;
+        margin: 0.5em 0 0.5em 0;
+        letter-spacing: 0.5px;
+        animation: popbtn 0.7s cubic-bezier(.68,-0.55,.27,1.55);
     }
     .stButton > button:hover {
         background: linear-gradient(90deg, #ffcc33 0%, #ffb347 100%);
         color: #d35400;
-        box-shadow: 0 4px 16px #ffb34744;
+        box-shadow: 0 8px 32px #ffb34788;
+        transform: scale(1.04);
+    }
+    @keyframes popbtn {
+        0% { transform: scale(0.9); }
+        80% { transform: scale(1.08); }
+        100% { transform: scale(1); }
     }
     .chat-card {
-        background: #fff;
-        border-radius: 16px;
-        box-shadow: 0 2px 12px #0002;
-        padding: 1.2em 1em 1em 1em;
-        margin-bottom: 1.2em;
-        border: 1.5px solid #ffe0b2;
+        background: rgba(255,255,255,0.97);
+        border-radius: 20px;
+        box-shadow: 0 4px 24px #0001, 0 1.5px 0 #fff8 inset;
+        padding: 1.3em 1.2em 1.1em 1.2em;
+        margin-bottom: 1.3em;
+        border: 2px solid #ffe0b2;
+        text-align: left;
+        animation: fadein 0.7s;
     }
     .emergency-card {
         background: #fff7e6;
-        border-radius: 14px;
-        box-shadow: 0 2px 8px #ffb34733;
-        padding: 1em 1em 0.7em 1em;
-        margin-bottom: 1em;
-        border: 2px solid #ffb347;
+        border-radius: 18px;
+        box-shadow: 0 4px 16px #ffb34733;
+        padding: 1.1em 1.2em 0.8em 1.2em;
+        margin-bottom: 1.2em;
+        border: 2.5px solid #ffb347;
+        animation: fadein 0.7s;
     }
-    .emergency-list { list-style: none; padding: 0; }
-    .emergency-list li { margin-bottom: 0.5em; font-size: 1.1em; }
-    .phone-btn {
-        background: #ffb347;
-        color: #fff;
-        font-weight: bold;
-        border-radius: 8px;
-        padding: 0.5em 1.5em;
-        border: none;
-        font-size: 1.1em;
-        margin-top: 0.7em;
-        box-shadow: 0 2px 8px #ffb34744;
-        transition: 0.2s;
-        text-decoration: none;
-        display: inline-block;
+    @keyframes fadein {
+        0% { opacity: 0; transform: translateY(20px); }
+        100% { opacity: 1; transform: translateY(0); }
     }
-    .phone-btn:hover {
-        background: #ff8800;
-        color: #fff;
-        box-shadow: 0 4px 16px #ffb34788;
+    .stTextInput > div > input, .stTextArea textarea {
+        background: #fffbe7;
+        border: 2px solid #ffe082;
+        border-radius: 10px;
+        font-size: 1.08em;
+        padding: 0.7em 1em;
+        margin-bottom: 0.5em;
+        box-shadow: 0 2px 8px #ffb34722;
+        transition: border 0.2s;
     }
-    .header-logo { display: flex; justify-content: center; align-items: center; margin-bottom: 1.5em; }
-    .header-logo img { height: 60px; margin-right: 1em; }
-    .header-logo h1 { font-size: 2.2em; font-weight: 900; color: #ff8800; letter-spacing: -1px; }
+    .stTextInput > div > input:focus, .stTextArea textarea:focus {
+        border: 2.5px solid #ffb347;
+        outline: none;
+    }
+    .header-logo {
+        display: flex; justify-content: center; align-items: center; margin-bottom: 2em;
+        background: rgba(255,255,255,0.85); border-radius: 18px; box-shadow: 0 2px 12px #ffb34733;
+        padding: 1.2em 1.5em 1.2em 1.5em;
+        max-width: 600px; margin-left:auto; margin-right:auto;
+    }
+    .header-logo img {
+        height: 70px; margin-right: 1.2em; filter: drop-shadow(0 2px 8px #ffb34788);
+    }
+    .header-logo h1 {
+        font-size: 2.5em; font-weight: 900; color: #ff8800; letter-spacing: -1px; text-shadow: 0 2px 8px #fff8;
+        margin-bottom: 0;
+    }
     .sidebar-menu { margin-top: 2em; }
     .sidebar-menu a { display: block; margin-bottom: 1em; color: #ff8800; font-weight: bold; text-decoration: none; }
     .sidebar-menu a:hover { color: #d35400; }
+    .save-ui-card {
+        background: rgba(255,255,255,0.98);
+        border: 2.5px solid #ffcc80;
+        border-radius: 18px;
+        box-shadow: 0 4px 24px #ffb34722;
+        padding: 2em 1.5em 1.5em 1.5em;
+        margin: 2em auto 1.5em auto;
+        max-width: 520px;
+        text-align: center;
+        animation: fadein 0.7s;
+    }
+    .stRadio > div { justify-content: center !important; }
+    .stTextInput, .stTextArea { margin-left:auto; margin-right:auto; max-width: 400px; }
     </style>
 ''', unsafe_allow_html=True)
 
@@ -214,14 +258,11 @@ if menu == "챗 상담":
             if save_choice == "예":
                 st.session_state[f"save_choice_confirmed_{last_result_idx}"] = True
             elif save_choice == "아니요":
-                # 관련 세션 상태 모두 삭제 및 대화기록 초기화
+                # 관련 세션 상태 모두 삭제
                 for k in [f'save_mode_{last_result_idx}',f'save_memo_{last_result_idx}',f'save_choice_{last_result_idx}',f'save_symptom_input_{last_result_idx}',f'save_choice_confirmed_{last_result_idx}']:
                     if k in st.session_state:
                         del st.session_state[k]
                 st.session_state['step'] = 'chat'
-                st.session_state['messages'] = [
-                    {"role": "system", "content": gpts_prompt.SYSTMEM_PROMPT}
-                ]
                 st.info("저장이 취소되었습니다. 챗봇을 계속 이용하실 수 있습니다.")
                 st.rerun()
                 return
